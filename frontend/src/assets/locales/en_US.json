@@ -1,0 +1,31 @@
+{
+	"modify": "modify",
+	"permissionDenied": "permission denied",
+	"login": {
+	  "login": "Sign In",
+	  "signup": "Sign Up",
+	  "username": "Username",
+	  "password": "Password",
+	  "passwordConfirm": "Confirm Password",
+	  
+	  "email": "Email",
+	  "phone": "Phone",
+	  "passwordNotEmpty": "username or password can't empty",
+	  "passwordConfirmationFailed": "passwords do not match"
+	},
+	"admin": {
+        "port": "port",
+        "inputPort": "input port",
+		"user": "user",
+		"tool": "tool"
+    },
+	"role": {
+        "title": "role",
+        "admin": "admin",
+        "special": "special",
+        "user": "user",
+        "guest": "guest"
+    },
+	"editUser": "Edit User"
+  }
+  

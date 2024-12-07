@@ -1,0 +1,35 @@
+{
+    "loading": "加载中",
+    "modify": "修改",
+    "edit": "编辑",
+    "delete": "删除",
+    "page": "页",
+    "permissionDenied": "没有权限",
+    "login": {
+        "login": "登录",
+        "signup": "注册",
+        "passwordNotEmpty": "用户名和密码不能为空",
+        "passwordConfirmationFailed": "两次密码不一致",
+        "username": "用户名",
+        "password": "密码",
+        "passwordConfirm": "确认密码",
+        "email": "邮箱",
+        "phone": "手机"
+    },
+    "admin": {
+        "port": "端口",
+        "inputPort": "请输入端口号",
+        "user": "用户管理",
+		"tool": "工具箱"
+    },
+    "role": {
+        "title": "权限",
+        "admin": "管理员",
+        "special": "特别",
+        "user": "普通用户",
+        "guest": "访客"
+    },
+    "status": "状态",
+    "action": "操作",
+    "editUser": "编辑用户"
+}
