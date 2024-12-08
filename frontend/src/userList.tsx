@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form, Input, Select, Switch, message, Popconfirm, Pagination } from 'antd';
 import { deleteUserApi, getUsersApi, updateUserApi } from './api/api';
-import { Role, roleName } from './utils/requireAuth';
+import { Role, roleName, useRequireAuth } from './utils/requireAuth';
 import { t } from './utils/i18n';
 
 const { Option } = Select;
@@ -9,6 +9,7 @@ const { Option } = Select;
 
 
 function UserListPage() {
+    useRequireAuth();
     const [visible, setVisible] = useState(false);
     const [total, setTotal] = useState(0);
     const [userList, setUserList] = useState<UserDetail[]>([])

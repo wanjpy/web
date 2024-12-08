@@ -29,6 +29,13 @@
         "user": "普通用户",
         "guest": "访客"
     },
+    "result":{
+        "name":"用例名",
+        "result": "结果",
+        "handler": "责任人",
+        "conclusion": "结论",
+        "edit": "编辑"
+    },
     "status": "状态",
     "action": "操作",
     "editUser": "编辑用户"

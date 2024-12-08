@@ -26,6 +26,13 @@
         "user": "user",
         "guest": "guest"
     },
+	"result":{
+        "name":"casename",
+        "result": "result",
+        "handler": "handler",
+        "conclusion": "conclusion",
+        "edit": "edit"
+    },
 	"editUser": "Edit User"
   }
   

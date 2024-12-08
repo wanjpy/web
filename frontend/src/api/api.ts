@@ -52,3 +52,9 @@ export async function updateUserApi(user: UserDetail): Promise<ApiResponse> {
     return request("POST", `/api/user/${user.id}`, user)
 
 }
+
+
+// case results
+export async function getCaseResultsApi<T>(page: number = 1, page_size: number = 20): Promise<ApiResponse<T>> {
+    return request("GET", `/api/case/results?page=${page}&page_size=${page_size}`)
+}

@@ -6,6 +6,7 @@ import Login from './Login.tsx';
 import App from './App.tsx'
 import { Admin } from './Admin.tsx';
 import UserListPage from './userList.tsx';
+import CaseResultsPage from './caseResult.tsx';
 
 
 const router = createBrowserRouter([
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
 
       },
     ]
+  },
+  {
+    path: "/caseResult",
+    element: <CaseResultsPage />
   },
   {
     path: "/login",

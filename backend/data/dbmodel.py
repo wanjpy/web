@@ -52,3 +52,9 @@ class User(ETagMixin, Base):
         data['status'] = self.status
         data['id'] = self.id
         return data
+    
+class ErrorTestCase(ETagMixin, Base):
+    __tablename__ = "error_test_case"
+
+class ErrorTestCaseRecord(ETagMixin, Base):
+    __tablename__ = "ErrorTestCaseRecord"

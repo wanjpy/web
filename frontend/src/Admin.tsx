@@ -27,7 +27,7 @@ export function Admin() {
                     mode="inline"
                     defaultSelectedKeys={[currentRoute]}
                     items={[
-                        { 'key': 'tool', icon: <ToolOutlined />, label: <Link to="tool" >{t('admin.tool')}</Link> },
+                        // { 'key': 'tool', icon: <ToolOutlined />, label: <Link to="tool" >{t('admin.tool')}</Link> },
                         { 'key': 'user', icon: <UserOutlined />, label: <Link to="user" >{t('admin.user')}</Link> },
                     ]}
                 />

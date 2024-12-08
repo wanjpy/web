@@ -12,6 +12,9 @@ function App() {
       <Link to="/login" >
         login
       </Link><br />
+      <Link to="/caseResult">
+        result
+      </Link>
     </>
   )
 }
