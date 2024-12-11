@@ -75,3 +75,14 @@ async def get_users(session: AsyncSession, page: FromQuery[int] = FromQuery(1), 
         data.data = users
 
     return ApiResponse(code=0, message="success", data=data.model_dump())
+
+@auth(Role.user)
+@get("/api/test/users")
+async def get_users(session: AsyncSession):
+    async with session:
+        result = await session.execute(select(User).add_columns(User.id, User.username, User.nickname).filter(User.role < Role.admin.value))
+        users = list()
+        for user in result.scalars().all():
+            users.append({"id": user.id, "username": user.username, "nickname": user.email})   
+
+    return ApiResponse(code=0, message="success", data=users)

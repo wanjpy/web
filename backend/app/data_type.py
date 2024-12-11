@@ -21,7 +21,7 @@ class PaginationData(BaseModel):
     page: int = 0
     page_size: int = 0
     total: int = 0
-    data: list = 0
+    data: list = []
 
 
 class CreateUser(BaseModel):

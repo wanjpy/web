@@ -10,12 +10,12 @@ from app.auth import Role
 
 
 @auth(Role.user)
-@get("/api/case/results")
+@get("/api/test/results")
 async def results(session: AsyncSession, page: FromQuery[int] = FromQuery(1), page_size: FromQuery[int] = FromQuery(20)):
     data = PaginationData()
     data.page = page.value
     data.page_size = page_size.value
-    data.total = 2
+    data.total = 12
     # data: CreateUser = data.value
     # data.password = password_encrypt(data.password)
     # async with session:
@@ -24,6 +24,7 @@ async def results(session: AsyncSession, page: FromQuery[int] = FromQuery(1), pa
     #         return ApiResponse(1, 'username is already in use')
     #     session.add(User(**data.model_dump()))
     #     await session.commit()
-    data.data = [{'casename': 'test', 'result': 'fail', 'handler': 'a', 'conclusion': 'conclusion'},
-            {'casename': 'test2', 'result': 'fail', 'handler': 'b', 'conclusion': 'conclusion'}]
+    print(data.data)
+    for i in range(data.total):
+        data.data.append({'case_id': f'test00{i}','case_name':f'测试{i}', 'start_time':'2024-12-12 12:12','maintenance':f'a{i}', 'result': 'fail','detail':'have a wrong', 'handler': 2, 'conclusion': f'conclusion{i}'})
     return ApiResponse(0, 'success', data=data)

@@ -1,6 +1,11 @@
 interface CaseResult {
     casename: string;
-    result: string;
-    handler: string;
+    result: boolean;
+    handler: number;
     conclusion: string;
+}
+interface TestUserType{
+    id: number;
+    username: string;
+    nickname: string;
 }

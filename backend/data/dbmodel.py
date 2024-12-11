@@ -37,6 +37,7 @@ class User(ETagMixin, Base):
     __tablename__ = "user"
     
     username = Column(String(50), nullable=False)
+    nickname = Column(String(50), nullable=True)
     password = Column(String(20), nullable=False)
     email = Column(String(20), nullable=True)
     phone = Column(String(20), nullable=True)
