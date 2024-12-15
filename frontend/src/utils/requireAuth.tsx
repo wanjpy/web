@@ -16,7 +16,8 @@ export const roleName: { [key: number]: string } = {
     [Role.guest]: t("role.guest"),
 };
 function isLoggedIn(): boolean {
-    return localStorage.getItem("user") !== null
+    // return localStorage.getItem("user") !== null
+    return document.cookie.match(/token=([^;]+)/) !== null;
 }
 export function saveUserInfo(user: UserType) {
     localStorage.setItem("user", JSON.stringify(user))

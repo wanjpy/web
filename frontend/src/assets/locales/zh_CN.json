@@ -30,13 +30,20 @@
         "guest": "访客"
     },
     "result":{
-        "name":"用例名",
+        "success": "成功",
+        "fail": "失败",
+        "case_id": "用例编号",
+        "case_name":"用例名",
         "result": "结果",
+        "start_time": "开始时间",
+        "guardian": "维护人",
         "handler": "责任人",
         "conclusion": "结论",
-        "edit": "编辑"
+        "detail": "结论详情",
+        "submit": "提交"
     },
     "status": "状态",
     "action": "操作",
-    "editUser": "编辑用户"
+    "editUser": "编辑用户",
+    "submit": "提交"
 }

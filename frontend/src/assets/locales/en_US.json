@@ -2,37 +2,41 @@
 	"modify": "modify",
 	"permissionDenied": "permission denied",
 	"login": {
-	  "login": "Sign In",
-	  "signup": "Sign Up",
-	  "username": "Username",
-	  "password": "Password",
-	  "passwordConfirm": "Confirm Password",
-	  
-	  "email": "Email",
-	  "phone": "Phone",
-	  "passwordNotEmpty": "username or password can't empty",
-	  "passwordConfirmationFailed": "passwords do not match"
+		"login": "Sign In",
+		"signup": "Sign Up",
+		"username": "Username",
+		"password": "Password",
+		"passwordConfirm": "Confirm Password",
+		"email": "Email",
+		"phone": "Phone",
+		"passwordNotEmpty": "username or password can't empty",
+		"passwordConfirmationFailed": "passwords do not match"
 	},
 	"admin": {
-        "port": "port",
-        "inputPort": "input port",
+		"port": "port",
+		"inputPort": "input port",
 		"user": "user",
 		"tool": "tool"
-    },
+	},
 	"role": {
-        "title": "role",
-        "admin": "admin",
-        "special": "special",
-        "user": "user",
-        "guest": "guest"
-    },
-	"result":{
-        "name":"casename",
-        "result": "result",
-        "handler": "handler",
-        "conclusion": "conclusion",
-        "edit": "edit"
-    },
+		"title": "role",
+		"admin": "admin",
+		"special": "special",
+		"user": "user",
+		"guest": "guest"
+	},
+	"result": {
+		"success": "success",
+        "fail": "fail",
+		"case_id": "case_id",
+		"case_name": "case_name",
+		"result": "result",
+		"start_time": "start_time",
+		"guardian": "guardian",
+		"handler": "handler",
+		"conclusion": "conclusion",
+		"detail": "detail",
+		"submit": "submit"
+	},
 	"editUser": "Edit User"
-  }
-  
+}
