@@ -12,7 +12,7 @@ import Highlighter from 'react-highlight-words';
 
 const { RangePicker } = DatePicker;
 type DataIndex = keyof CaseResult;
-
+//https://github.com/hemengke1997/use-antd-resizable-header
 export default function CaseResultsPage() {
     useRequireAuth();
     const [searchForm] = Form.useForm();
