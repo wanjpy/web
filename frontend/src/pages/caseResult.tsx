@@ -12,6 +12,12 @@ import Highlighter from 'react-highlight-words';
 
 const { RangePicker } = DatePicker;
 type DataIndex = keyof CaseResult;
+
+type OnChange = NonNullable<TableProps<CaseResult>['onChange']>;
+type Filters = Parameters<OnChange>[1];
+
+type GetSingle<T> = T extends (infer U)[] ? U : never;
+type Sorts = GetSingle<Parameters<OnChange>[2]>;
 //https://github.com/hemengke1997/use-antd-resizable-header
 export default function CaseResultsPage() {
     useRequireAuth();
@@ -22,10 +28,34 @@ export default function CaseResultsPage() {
     const [testUsers, setTestUsers] = useState<TestUserType[]>([]);
     const [testUserMap, setTestUserMap] = useState<Map<number, TestUserType>>(new Map());
     const [caseResults, setCaseResults] = useState<CaseResult[]>([]);
+
+    const [filteredInfo, setFilteredInfo] = useState<Filters>({});
+    const [sortedInfo, setSortedInfo] = useState<Sorts>({});
+    const [startTimeFilter, setStartTimeFilter] = useState<string[]>([]);
+
+    const handleChange: OnChange = (pagination, filters, sorter) => {
+        console.log('Various parameters', pagination, filters, sorter);
+        setFilteredInfo({...filters, start_time: startTimeFilter});
+        setSortedInfo(sorter as Sorts);
+        console.log('filteredInfo', filteredInfo);
+    };
+    const clearFilters = () => {
+        setFilteredInfo({});
+    };
+
+    const clearAll = () => {
+        setFilteredInfo({});
+        setSortedInfo({});
+    };
     useEffect(() => {
         getResults();
         getUsers();
-    }, []);
+      }, []); 
+
+    useEffect(() => {
+        getResults();
+        console.log('filteredInfo', filteredInfo);
+    }, [filteredInfo]);
     const getResults = (page: number = 1, page_size: number = 10) => {
         // 在组件加载时从后端接口获取数据
         getCaseResultsApi<PaginationData<CaseResult>>(page, page_size).then(res => {
@@ -82,83 +112,86 @@ export default function CaseResultsPage() {
         selectedKeys: string[],
         confirm: FilterDropdownProps['confirm'],
         dataIndex: DataIndex,
-      ) => {
+    ) => {
         confirm();
         setSearchText(selectedKeys[0]);
         setSearchedColumn(dataIndex);
-      };
-    
-      const handleReset = (clearFilters: () => void) => {
+    };
+
+    const handleReset = (clearFilters: () => void) => {
         clearFilters();
         setSearchText('');
-      };
+    };
     const getColumnSearchProps = (dataIndex: DataIndex): TableColumnType<CaseResult> => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
-          <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
-            <Input
-              ref={searchInput}
-              placeholder={`Search ${dataIndex}`}
-              value={selectedKeys[0]}
-              onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-              onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
-              style={{ marginBottom: 8, display: 'block' }}
-            />
-            <Space>
-              <Button
-                type="primary"
-                onClick={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
-                size="small"
-                style={{ width: 90 }}
-              >
-                Search
-              </Button>
-              <Button
-                onClick={() => clearFilters && handleReset(clearFilters)}
-                size="small"
-                style={{ width: 90 }}
-              >
-                Reset
-              </Button>
-              <Button
-                type="link"
-                size="small"
-                onClick={() => {
-                  confirm({ closeDropdown: false });
-                  setSearchText((selectedKeys as string[])[0]);
-                  setSearchedColumn(dataIndex);
-                }}
-              >
-                Filter
-              </Button>
-          
-            </Space>
-          </div>
+            <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+                <Input
+                    ref={searchInput}
+                    placeholder={`Search ${dataIndex}`}
+                    value={selectedKeys[0]}
+                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                    onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+                    style={{ marginBottom: 8, display: 'block' }}
+                />
+                <Space>
+                    <Button
+                        type="primary"
+                        onClick={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Search
+                    </Button>
+                    <Button
+                        onClick={() => clearFilters && handleReset(clearFilters)}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Reset
+                    </Button>
+                    <Button
+                        type="link"
+                        size="small"
+                        onClick={() => {
+                            confirm({ closeDropdown: false });
+                            setSearchText((selectedKeys as string[])[0]);
+                            setSearchedColumn(dataIndex);
+                        }}
+                    >
+                        Filter
+                    </Button>
+
+                </Space>
+            </div>
         ),
-       
-        onFilter: (value, record) =>
-          record[dataIndex]
-            .toString()
-            .toLowerCase()
-            .includes((value as string).toLowerCase()),
+
+        onFilter: (value, record) => {
+            console.log("onFilter", value, record);
+
+            return record[dataIndex]
+                .toString()
+                .toLowerCase()
+                .includes((value as string).toLowerCase())
+        },
         filterDropdownProps: {
-          onOpenChange(open) {
-            if (open) {
-              setTimeout(() => searchInput.current?.select(), 100);
-            }
-          },
+            onOpenChange(open) {
+                if (open) {
+                    setTimeout(() => searchInput.current?.select(), 100);
+                }
+            },
         },
         render: (text) =>
-          searchedColumn === dataIndex ? (
-            <Highlighter
-              highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-              searchWords={[searchText]}
-              autoEscape
-              textToHighlight={text ? text.toString() : ''}
-            />
-          ) : (
-            text
-          ),
-      });
+            searchedColumn === dataIndex ? (
+                <Highlighter
+                    highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                    searchWords={[searchText]}
+                    autoEscape
+                    textToHighlight={text ? text.toString() : ''}
+                />
+            ) : (
+                text
+            ),
+    });
     const columns = [
         {
             title: t('result.case_id'),
@@ -181,17 +214,43 @@ export default function CaseResultsPage() {
             title: t('result.start_time'),
             dataIndex: 'start_time',
             key: 'start_time',
-            filtered: true,
-            filterDropdown: () => (
+            filteredValue: filteredInfo.start_time || null,
+            filtered: filteredInfo.start_time !== null,
+            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+
+
                 <div style={{ padding: 8 }}>
                     <RangePicker
+                        value={selectedKeys[0]}
                         format="YYYY-MM-DD"
                         onChange={(_, dateString: string[]) => {
+                            // setSelectedKeys([dateString]);
                             // [ "2024-12-03", "2025-01-14" ]
-                            console.log(dateString);
+                            console.log(dateString, selectedKeys);
+                            setStartTimeFilter(dateString);
+                            // setFilteredInfo({...filteredInfo, start_time: dateString });
 
                         }}
                     />
+                    <br />
+                    <Space>
+                        <Button
+                            onClick={() => clearFilters && handleReset(clearFilters)}
+                            size="small"
+                            style={{ width: 90 }}
+                        >
+                            Reset
+                        </Button>
+                        <Button
+                            size="small"
+                            onClick={() => {
+                                confirm({ closeDropdown: true });
+
+                            }}
+                        >
+                            Filter
+                        </Button>
+                    </Space>
                 </div>
             ),
         },
@@ -258,6 +317,7 @@ export default function CaseResultsPage() {
             dataIndex: 'conclusion',
             key: 'conclusion',
             width: '8%',
+            filtered: filteredInfo.conclusion !== null,
             filters: conclusionOptions.map((item) => ({ text: item.label, value: item.value })),
             render: (_text: string, record: CaseResult) => (
                 <Select
@@ -306,7 +366,7 @@ export default function CaseResultsPage() {
                 scroll={{ x: "max-content", y: 600 }}
                 pagination={false} rowKey="id"
                 loading={loading}
-                onChange={handleTableChange}
+                onChange={handleChange}
             />
             <Pagination
                 total={total}
